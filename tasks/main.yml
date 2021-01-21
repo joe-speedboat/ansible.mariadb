@@ -1,0 +1,31 @@
+---
+- import_tasks: include-vars.yml
+
+# install mariadb server
+- include_tasks: install.yml
+  when: not mariadb_manage_only
+  tags: [install]
+
+# configure root account
+- include_tasks: conf_root_access.yml
+  when: not mariadb_manage_only
+  tags: [root]
+
+# secure mariadb installation
+- include_tasks: secure.yml
+  when: mariadb_secure_installation and not mariadb_manage_only
+  tags: [secure]
+
+# create/remove databases
+- include_tasks: database.yml
+  tags: [database]
+
+# create/remove users
+- include_tasks: user_conf.yml
+  tags: [user]
+
+# backup database
+- include_tasks: backup.yml
+  tags: [backup]
+
+...

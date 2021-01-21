@@ -1,0 +1,11 @@
+---
+# vars/main.yml from js.mariadb
+
+mariadb_packages_centos8:
+- mariadb-server
+- python2-PyMySQL
+- python3-PyMySQL
+
+mariadb_packages_centos7:
+- mariadb-server
+- MySQL-python
