@@ -36,6 +36,13 @@ Example playbooks for this role are located in ´test´ folder:
 * `test/playbook_mariadb.yml`: Real life example
 * `test/playbook_mariadb_full.yml`: Full example with all possible vars.  
 
+Install with git
+-----------------
+```shell
+git clone https://github.com/joe-speedboat/ansible.mariadb.git /etc/ansible/roles/joe-speedboat.mariadb
+```
+
+
 License
 --------------
 https://opensource.org/licenses/LGPL-3.0    
