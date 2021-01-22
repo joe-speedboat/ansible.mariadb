@@ -15,15 +15,15 @@ KEEP_MONTHS="{{ mariadb_backup_keep_monthly }}"
 BDIR="{{ mariadb_backup_dir }}"
 test -d ${BDIR} || mkdir -p "${BDIR}"
 chmod 700 "$BDIR"
-
 BTYPE=daily
-[ "$(date '+%u')" == "01" ] && BTYPE=weekly
-[ "$(date '+%d')" == "01" ] && BTYPE=monthly
-DB_PREF="${BTYPE}__$(date '+%Y%m%d')"
 
 for DB_NAME in $( mysql -N -B -e "show databases" | egrep -v 'information_schema|performance_schema' )
 do
-  mysqldump ${DB_NAME} --single-transaction | gzip > ${BDIR}/${DB_PREF}__${DB_NAME}.mysql.gz || RC=1
+  mysqldump ${DB_NAME} --single-transaction | gzip > ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz || RC=1
+  [ "$(date '+%u')" == "01" ] && ADD_BTYPE=weekly
+  [ "$(date '+%d')" == "01" ] && ADD_BTYPE=monthly
+  [ "$BTYPE" != "$ADD_BTYPE" ] && cp -al ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz ${BDIR}/${ADD_BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz
+  
 done
 
 if [ $RC -eq 0 ]
