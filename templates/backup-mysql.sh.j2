@@ -20,10 +20,8 @@ BTYPE=daily
 for DB_NAME in $( mysql -N -B -e "show databases" | egrep -v 'information_schema|performance_schema' )
 do
   mysqldump ${DB_NAME} --single-transaction | gzip > ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz || RC=1
-  [ "$(date '+%u')" == "01" ] && ADD_BTYPE=weekly
-  [ "$(date '+%d')" == "01" ] && ADD_BTYPE=monthly
-  [ "$BTYPE" != "$ADD_BTYPE" ] && cp -al ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz ${BDIR}/${ADD_BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz
-  
+  [ "$(date '+%u')" == "1" ] && cp -al ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz ${BDIR}/weekly__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz
+  [ "$(date '+%d')" == "01" ] && cp -al ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz ${BDIR}/monthly__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz
 done
 
 if [ $RC -eq 0 ]
@@ -34,8 +32,6 @@ then
 else
    log -t $(basename $0) "ERROR: mysql backup failed, we need attention"
 fi
-
-
 
 ################################################################################
 
