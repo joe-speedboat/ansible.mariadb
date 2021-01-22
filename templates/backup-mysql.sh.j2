@@ -30,7 +30,7 @@ then
   find "${BDIR}" -type f -name "weekly__*.mysql.gz" -prune -mtime +$((${KEEP_WEEKS}*7)) -exec rm -f {} \;
   find "${BDIR}" -type f -name "monthly__*.mysql.gz" -prune -mtime +$((${KEEP_MONTHS}*31)) -exec rm -f {} \;
 else
-   log -t $(basename $0) "ERROR: mysql backup failed, we need attention"
+   logger -t $(basename $0) "ERROR: mysql backup failed, we need attention"
 fi
 
 ################################################################################
