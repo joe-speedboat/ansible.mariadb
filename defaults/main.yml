@@ -1,18 +1,60 @@
 ---
-# js.mariadb role defaults/main.yml
-# note: mysql -uroot -sNe"`mysql -uroot -se"SELECT CONCAT('SHOW GRANTS FOR \'',user,'\'@\'',host,'\';') FROM mysql.user;"`"
-mariadb_secure_installation: True
-mariadb_root_password: ''
-mariadb_databases: {}
-mariadb_users_create: {}
-mariadb_users_remove: {}
-mariadb_mysqld_config:
-- "innodb_large_prefix = 1"
-- "innodb_file_format = barracuda"
-mariadb_manage_only: False
+# Here belong all variables, that can be changed by a vars-file,
+# a playbook or a include.
 
-mariadb_backup_disable: False
-mariadb_backup_dir: /srv/bkp
-mariadb_backup_keep_daily: 8
-mariadb_backup_keep_weekly: 5
-mariadb_backup_keep_monthly: 12
+mariadb_secure_installation: yes
+mariadb_root_password: ''
+mariadb_databases: []
+mariadb_users_create: []
+mariadb_users_remove: []
+mariadb_manage_only: no
+mariadb_selinux: yes
+mariadb_update_only: no
+
+mariadb_config_server:
+- "# Query Cache"
+- query_cache_type = 1
+- query_cache_limit = 128K
+- query_cache_min_res_unit = 1K
+- query_cache_size = 128M
+- "# Buffer Size"
+- join_buffer_size = 1M
+- sort_buffer_size = 1M
+- innodb_buffer_pool_size = 1G
+- innodb_buffer_pool_instances = 1
+- "# Table Tuning"
+- tmp_table_size = 64M
+- max_heap_table_size = 64M
+- table_open_cache = 4000
+- "# General"
+- performance_schema = ON
+- skip-name-resolve
+
+mariadb_config_mysqld:
+- "# General"
+- innodb_large_prefix = 1
+- innodb_file_format = barracuda
+- "# Log File"
+- innodb_log_file_size = 128M
+
+mariadb_config_client: []
+
+mariadb_tuning_innodb_buffer: 1G
+mariadb_tuning_sort_buffer: 1M
+mariadb_tuning_join_buffer: 1M
+mariadb_tuning_query_cache: 128M
+mariadb_tuning_query_cache_limit: 128K
+mariadb_tuning_query_cache_min: 1K
+mariadb_tuning_tmp_table: 64M
+mariadb_tuning_heap_table: 64M
+mariadb_tuning_table_open: 4000
+mariadb_tuning_innodb_log: 128M
+
+mariadb_backup_enable: True
+mariadb_backup_dir: /srv/bkp/mariadb
+mariadb_backup_keep_daily: 3
+mariadb_backup_keep_weekly: 2
+mariadb_backup_keep_monthly: 1
+
+
+...

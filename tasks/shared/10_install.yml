@@ -1,0 +1,18 @@
+---
+
+- name: import rpm key
+  rpm_key:
+    state: present
+    key: "{{ mariadb_epel_key }}"
+
+- name: install epel repo packages
+  yum:
+    name: "{{ mariadb_epel_package }}"
+    state: present
+
+- name: Install packages
+  yum:
+    name: "{{ mariadb_packages + mariadb_packages_rhel8 }}" 
+    state: installed
+
+...

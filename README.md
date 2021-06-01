@@ -1,49 +1,38 @@
+<a href="https://www.bitbull.ch"><img src="https://www.bitbull.ch/wiki/images/teamwork-trans.png" alt="Bitbull" width="250px"/></a>
 
-MariaDB Setup with Ansible
-=================
+# joe-speedboat.mariadb
 
-* install and configure MariaDB
+This Ansible Role installs & configures mariadb, as well as manages content (db & user).
 
-Requirements
-------------
+Installation with ansible-galaxy:
 
-* Currently tested with CentOS 7 and 8
-* Ansible 2.4 or higher is required for this Ansible Role
+``` bash
+ansible-galaxy install joe-speedboat.mariadb
+```
 
-Role Variables
---------------
-Variables are self speaking or documented in:   
-* `defaults/main.yml`
-* `vars/main.yml`
+## Requirements
 
-The following variables can be overridden:
- * `mariadb_secure_installation`: Default: false. Similar to `mysql_secure_installation`
- * `mariadb_root_password`: Default: ''.
- * `mariadb_databases`: Default: {} . Dictionary with databases.
- * `mariadb_users_create`: Default: {}. Dictionary with user credentials.
- * `mariadb_users_remove`: Default: {}. Dictionary of users to remove.
+* Ansible 2.9 or higher is required for this Ansible Role
+* OS Releases:
+  * CentOS7
+  * CentOS8
+  * CentOS Stream
 
-Dependencies
-------------
+## Dependencies
 
 This Ansilbe Role has no dependencies to other Ansilbe Roles
 
-Example Playbook
-----------------
+# uniQconsulting ag
+I am working for uniQconsulting ag and the initial roles I have written in my free time to prepare for Red Hat Ansible exam.
+When uniQconsulting ag started to work more and more with Ansible, I moved this roles into the uniQconsulting github namespace.
+However, to better suit my needs, I dediced to take them back and maintain my own, independent and more flexible version of it.
+Feel free to use, discuss and make some pull requests if you feel the need.
 
-Example playbooks for this role are located in ´test´ folder:
-* `test/playbook_mariadb_minimal.yml`: Minimal role for testing
-* `test/playbook_mariadb.yml`: Real life example
-* `test/playbook_mariadb_full.yml`: Full example with all possible vars.  
+Thanks
 
-Install with git
------------------
-```shell
-git clone https://github.com/joe-speedboat/ansible.mariadb.git /etc/ansible/roles/joe-speedboat.mariadb
-```
+Chris
 
 
 License
---------------
+-------
 https://opensource.org/licenses/LGPL-3.0    
-Copyright (c) Chris Ruettimann <chris@bitbull.ch>

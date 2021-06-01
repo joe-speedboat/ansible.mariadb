@@ -1,0 +1,21 @@
+---
+
+- name: update base mariadb server configuration
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart mariadb
+  when:
+  - not mariadb_update_only
+
+- name: Enable and start mariadb-server
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+  when: not mariadb_update_only
+
+...

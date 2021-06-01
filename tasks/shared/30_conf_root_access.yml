@@ -8,28 +8,42 @@
 
 - block:
     - name: Create Systemd mariadb.service which respects env
-      template: src=mariadb.service.j2 dest=/etc/systemd/system/mariadb.service owner=root group=root mode=0644
+      template: 
+        src: mariadb.service.j2
+        dest: /etc/systemd/system/mariadb.service
+        owner: root
+        group: root
+        mode: 0644
 
     - name: just force systemd to reread configs
       systemd:
         daemon_reload: yes
 
-
     - name: Stop MySQL
-      systemd: name=mariadb state=stopped
+      service:
+        name: mariadb 
+        state: stopped
 
     - name: set environment variables
       shell: systemctl set-environment MYSQLD_OPTS="--skip-grant-tables --skip-networking"
 
     - name: Start MySQL
-      systemd: name=mariadb state=started
+      service:
+        name: mariadb
+        state: started
+
+    - name: wait for server to finish starting
+      pause:
+        seconds: 10
 
     - name: Set root Password
       command: mysql -u root mysql --execute="update user set password=PASSWORD('{{ mariadb_root_password }}') where User='root';"
       no_log: true
 
     - name: Stop MySQL
-      service: name=mariadb state=stopped
+      service: 
+        name: mariadb
+        state: stopped
       
     - name: remove customized mariadb.service
       file: 
@@ -44,22 +58,31 @@
       shell: systemctl unset-environment MYSQLD_OPTS
 
     - name: Start MySQL
-      systemd: name=mariadb state=started
+      service: 
+        name: mariadb
+        state: started
+
+    - name: wait for server to finish starting
+      pause:
+        seconds: 10
   when: mariadb_access_test is failed
-  tags: [root_recover]
 
-- block:
-  - name: set root user password
-    command: mysql -u root mysql --execute="update user set password=PASSWORD('{{ mariadb_root_password }}') where User='root';"
-    changed_when: False
-    no_log: true
-
-  - name: sql query flush
-    command:  mysql -u root --execute="FLUSH PRIVILEGES"
-    changed_when: False
-  when: mariadb_access_test is succeeded
-  tags: [root_change]
+- name: set root user password
+  community.mysql.mysql_query:
+    login_db: mysql
+    query: 
+    - update user set password=PASSWORD('{{ mariadb_root_password }}') where User='root'
+    - FLUSH PRIVILEGES
+  no_log: true
+  when: mariadb_access_test is succeeded and not mariadb_update_only
 
 - name: Configure /root/.my.cnf
-  template: src=my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0600
-  tags: [root_mycnf]
+  template: 
+    src: user_my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+  when: not mariadb_update_only
+
+...

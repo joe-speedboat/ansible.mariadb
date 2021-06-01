@@ -17,7 +17,7 @@
 - name: create cronjob for backup
   cron:
     name: backup-mysql
-    disabled: "{{ mariadb_backup_disable }}"
+    disabled: "{{ not (mariadb_backup_enable | bool) }}"
     minute: 1
     hour: 2
     user: root

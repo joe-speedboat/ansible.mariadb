@@ -1,9 +1,11 @@
 ---
-- name: mariadb started
-  service: name=mariadb state=started
+# Here belong all actions like service-restart,
+# config-file loads, etc. that will be started
+# if a change on a task was made
 
-- name: mariadb stopped
-  service: name=mariadb state=stopped
+- name: restart mariadb
+  service:
+    name: mariadb
+    state: restarted
 
-- name: mariadb restarted
-  service: name=mariadb state=restarted
+...

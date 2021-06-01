@@ -1,31 +1,22 @@
 ---
-- import_tasks: include-vars.yml
 
-# install mariadb server
-- include_tasks: install.yml
-  when: not mariadb_manage_only
-  tags: [install]
+# Don't touch this file
 
-# configure root account
-- include_tasks: conf_root_access.yml
-  when: not mariadb_manage_only
-  tags: [root]
+- name: include global vars file if present
+  import_tasks: include-vars.yml
 
-# secure mariadb installation
-- include_tasks: secure.yml
-  when: mariadb_secure_installation and not mariadb_manage_only
-  tags: [secure]
+- name: find all task files
+  local_action:
+    shell
+      ls -1 {{ role_path }}/tasks/*/*  | sed 's#.*\/##' | egrep '[0-9]{2}_.*\.yml' | sort -n -u
+  register: include_file_name_results
+  changed_when: False
 
-# create/remove databases
-- include_tasks: database.yml
-  tags: [database]
-
-# create/remove users
-- include_tasks: user_conf.yml
-  tags: [user]
-
-# backup database
-- include_tasks: backup.yml
-  tags: [backup]
+- name: "include tasks"
+  include_tasks: "include-file.yml"
+  loop_control:
+    loop_var: include_file_name 
+  with_items:
+    - "{{ include_file_name_results.stdout_lines }}"
 
 ...

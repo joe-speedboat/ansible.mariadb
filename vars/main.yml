@@ -1,11 +1,28 @@
 ---
-# vars/main.yml from js.mariadb
 
-mariadb_packages_centos8:
+mariadb_epel_key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
+mariadb_epel_package: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+
+# Packages
+mariadb_packages:
 - mariadb-server
+
+mariadb_packages_rhel8:
 - python2-PyMySQL
 - python3-PyMySQL
+- mysqltuner
 
 mariadb_packages_centos7:
-- mariadb-server
 - MySQL-python
+- mariadb-server
+
+mariadb_default_user_conf:
+  name: ""
+  password: ""
+  hosts:
+  - "localhost"
+  privs: []
+ # - "dbname.*:ALL"
+  append_privs: no
+
+...

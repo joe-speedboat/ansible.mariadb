@@ -1,0 +1,16 @@
+---
+
+- name: install dependent collection if not running in tower or awx
+  local_action:
+    shell
+      ansible-galaxy collection install community.mysql | egrep '.*community.mysql.*already installed' > /dev/null && echo "true" || echo "false"
+  changed_when: collection_cmd.stdout == "false"
+  register: collection_cmd
+  when: tower_job_id is not defined
+
+- name: check if dependencies were met
+  fail:
+    msg: "Collection had to be installed. Please restart the playbook."
+  when: collection_cmd.stdout == "false"
+
+...
