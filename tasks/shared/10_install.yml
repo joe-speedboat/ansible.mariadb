@@ -6,12 +6,12 @@
     key: "{{ mariadb_epel_key }}"
 
 - name: install epel repo packages
-  yum:
+  dnf:
     name: "{{ mariadb_epel_package }}"
     state: present
 
 - name: Install packages
-  yum:
+  dnf:
     name: "{{ mariadb_packages + mariadb_packages_rhel8 }}" 
     state: installed
 
