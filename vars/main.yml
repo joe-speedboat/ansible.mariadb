@@ -8,13 +8,9 @@ mariadb_packages:
 - mariadb-server
 
 mariadb_packages_rhel8:
-- python2-PyMySQL
+- python3
 - python3-PyMySQL
 - mysqltuner
-
-mariadb_packages_centos7:
-- MySQL-python
-- mariadb-server
 
 mariadb_default_user_conf:
   name: ""
