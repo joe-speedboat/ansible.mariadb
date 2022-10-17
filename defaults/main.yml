@@ -34,6 +34,7 @@ mariadb_config_mysqld:
 - "# General"
 - innodb_large_prefix = 1
 - innodb_file_format = barracuda
+- socket = /var/lib/mysql/mysql.sock
 - "# Log File"
 - innodb_log_file_size = 128M
 
