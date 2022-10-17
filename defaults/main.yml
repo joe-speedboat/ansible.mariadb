@@ -1,9 +1,9 @@
 ---
-# Here belong all variables, that can be changed by a vars-file,
-# a playbook or a include.
+
+mariadb_version: 10.6
 
 mariadb_secure_installation: yes
-mariadb_root_password: ''
+mariadb_root_password: 'xxx'
 mariadb_databases: []
 mariadb_users_create: []
 mariadb_users_remove: []

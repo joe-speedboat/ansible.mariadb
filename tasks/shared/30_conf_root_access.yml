@@ -37,7 +37,7 @@
         seconds: 10
 
     - name: Set root Password
-      command: mysql -u root mysql --execute="update user set password=PASSWORD('{{ mariadb_root_password }}') where User='root';"
+      command: mysql -u root mysql --execute="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('{{ mariadb_root_password }}');"
       no_log: true
 
     - name: Stop MySQL
@@ -68,11 +68,11 @@
   when: mariadb_access_test is failed
 
 - name: set root user password
-  community.mysql.mysql_query:
-    login_db: mysql
-    query: 
-    - update user set password=PASSWORD('{{ mariadb_root_password }}') where User='root'
-    - FLUSH PRIVILEGES
+  shell: |
+    mysql -uroot <<EOF
+    SET PASSWORD FOR 'root'@'localhost' = PASSWORD('{{ mariadb_root_password }}');
+    FLUSH PRIVILEGES;
+    EOF
   no_log: true
   when: mariadb_access_test is succeeded and not mariadb_update_only
 

@@ -1,0 +1,32 @@
+---
+- name: create mariadb repo
+  template: 
+    src: mariadb-el8.repo.j2
+    dest: /etc/yum.repos.d/mariadb.repo
+    owner: root 
+    group: root 
+    mode: 0644
+
+- name: import rpm key
+  rpm_key:
+    state: present
+    key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8"
+
+- name: install epel repo packages
+  dnf:
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+    state: present
+
+- name: Install Mariadb packages
+  dnf:
+    name: mariadb-server
+    state: installed
+
+- name: Install additional packages
+  dnf:
+    name:
+    - python3
+    - python3-PyMySQL
+    state: installed
+
+...

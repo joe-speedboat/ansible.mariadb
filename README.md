@@ -16,19 +16,12 @@ git clone https://github.com/joe-speedboat/ansible.mariadb.git /etc/ansible/role
 ## Requirements
 * Ansible 2.9 or higher is required for this Ansible Role
 * OS Releases:
-  * CentOS7
   * CentOS8
-  * CentOS Stream
+  * Alma/Rocky 9
 
 ## Role dependencies
 This Ansilbe Role has no dependencies to other Ansilbe Roles
 
-
-## Collection depencies
-* community.mysql
-```bash
-ansible-galaxy collection install -r collections/requirements.yml
-```
 
 ## uniQconsulting ag
 I am working for uniQconsulting ag and the initial roles I have written in my free time to prepare for Red Hat Ansible exam.
