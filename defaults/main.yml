@@ -3,7 +3,7 @@
 mariadb_version: 10.6
 
 mariadb_secure_installation: yes
-mariadb_root_password: 'xxx'
+mariadb_root_password: 'ChangeMe.'
 mariadb_databases: []
 mariadb_users_create: []
 mariadb_users_remove: []
@@ -34,6 +34,7 @@ mariadb_config_mysqld:
 - "# General"
 - innodb_large_prefix = 1
 - innodb_file_format = barracuda
+  "# Local DB access, Ansible uses this for connection" 
 - socket = /var/lib/mysql/mysql.sock
 - "# Log File"
 - innodb_log_file_size = 128M
@@ -54,8 +55,7 @@ mariadb_tuning_innodb_log: 128M
 mariadb_backup_enable: True
 mariadb_backup_dir: /srv/bkp/mariadb
 mariadb_backup_keep_daily: 3
-mariadb_backup_keep_weekly: 2
-mariadb_backup_keep_monthly: 1
-
+mariadb_backup_keep_weekly: 0
+mariadb_backup_keep_monthly: 0
 
 ...

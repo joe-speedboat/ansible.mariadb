@@ -1,0 +1,14 @@
+---
+- name: mariadb-secure-installation tasks
+  community.mysql.mysql_query:
+    login_unix_socket: /var/lib/mysql/mysql.sock
+    login_db: mysql
+    query:
+    - DELETE FROM mysql.global_priv WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+    - DELETE FROM mysql.global_priv WHERE User='';
+    - DROP DATABASE IF EXISTS test;
+    - DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+    - FLUSH PRIVILEGES;
+  when: not mariadb_update_only
+
+...

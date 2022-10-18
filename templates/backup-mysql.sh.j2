@@ -19,19 +19,46 @@ BTYPE=daily
 
 for DB_NAME in $( mysql -N -B -e "show databases" | egrep -v 'information_schema|performance_schema' )
 do
+  # RHEL like
+  test -f /etc/my.cnf
+  if [ $? -eq 0 ]
+  then
+    cd / && tar cfz ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__config.mysql.tar.gz -C / etc/my.cnf* || RC=1
+  fi
+  # DEBIAN like
+  test -d /etc/mysql
+  if [ $? -eq 0 ]
+  then
+    cd / && tar cfz ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__config.mysql.tar.gz -C / etc/mysql || RC=1
+  fi
   mysqldump ${DB_NAME} --single-transaction | gzip > ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz || RC=1
-  [ "$(date '+%u')" == "1" ] && cp -al ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz ${BDIR}/weekly__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz
-  [ "$(date '+%d')" == "01" ] && cp -al ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz ${BDIR}/monthly__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz
+
+  # monday
+  if [ "$(date '+%u')" == "1" -a $KEEP_WEEKS -gt 0 ] 
+  then
+    cp -al ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz ${BDIR}/weekly__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz
+  fi
+
+  # first day of month
+  if [ "$(date '+%d')" == "01" -a $KEEP_MONTHS -gt 0 ]
+  then
+    cp -al ${BDIR}/${BTYPE}__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz ${BDIR}/monthly__$(date '+%Y%m%d')__${DB_NAME}.mysql.gz
+  fi
 done
 
 if [ $RC -eq 0 ]
 then
-  find "${BDIR}" -type f -name "daily__*.mysql.gz" -prune -mtime +${KEEP_DAYS} -exec rm -f {} \;
-  find "${BDIR}" -type f -name "weekly__*.mysql.gz" -prune -mtime +$((${KEEP_WEEKS}*7)) -exec rm -f {} \;
-  find "${BDIR}" -type f -name "monthly__*.mysql.gz" -prune -mtime +$((${KEEP_MONTHS}*31)) -exec rm -f {} \;
+  find "${BDIR}" -type f -name "daily__*.gz" -prune -mtime +${KEEP_DAYS} -exec rm -fv {} \;
+  find "${BDIR}" -type f -name "weekly__*.gz" -prune -mtime +$((${KEEP_WEEKS}*7)) -exec rm -fv {} \;
+  find "${BDIR}" -type f -name "monthly__*.gz" -prune -mtime +$((${KEEP_MONTHS}*31)) -exec rm -fv {} \;
 else
+   echo "ERROR: mysql backup failed, we need attention"
    logger -t $(basename $0) "ERROR: mysql backup failed, we need attention"
 fi
 
+echo backup finished
+exit $RC
+
 ################################################################################
+
 

@@ -5,7 +5,7 @@
     user_conf: "{{ mariadb_default_user_conf | combine(user) }}"
 
 - name: Manage Mariadb users to create
-  mysql_user:
+  community.mysql.mysql_user:
     name: "{{ user_conf.name }}"
     login_unix_socket: /var/lib/mysql/mysql.sock
     host: "{{ item }}"

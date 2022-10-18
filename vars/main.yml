@@ -1,5 +1,4 @@
 ---
-
 mariadb_default_user_conf:
   name: ""
   password: ""

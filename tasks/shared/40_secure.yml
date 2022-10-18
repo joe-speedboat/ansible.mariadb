@@ -1,8 +1,0 @@
----
-
-- name: Call mariadb-secure-installation
-  shell: |
-    yes | mariadb-secure-installation
-  when: not mariadb_update_only
-
-...

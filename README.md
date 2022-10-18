@@ -22,6 +22,12 @@ git clone https://github.com/joe-speedboat/ansible.mariadb.git /etc/ansible/role
 ## Role dependencies
 This Ansilbe Role has no dependencies to other Ansilbe Roles
 
+## Collection depencies
+
+* community.mysql
+```bash
+ansible-galaxy collection install -r collections/requirements.yml
+```
 
 ## uniQconsulting ag
 I am working for uniQconsulting ag and the initial roles I have written in my free time to prepare for Red Hat Ansible exam.
