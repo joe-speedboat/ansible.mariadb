@@ -6,3 +6,17 @@ gpgcheck = 1
 enabled = 1
 module_hotfixes = 1
 
+[mariadb-maxscale]
+name = MariaDB MaxScale
+baseurl = https://dlm.mariadb.com/repo/maxscale/latest/yum/rhel/{{ ansible_distribution_major_version }}/x86_64
+gpgkey = https://supplychain.mariadb.com/MariaDB-MaxScale-GPG-KEY
+gpgcheck = 1
+enabled = 1
+
+[mariadb-tools]
+name = MariaDB Tools
+baseurl = https://downloads.mariadb.com/Tools/rhel/{{ ansible_distribution_major_version }}/x86_64
+gpgkey = https://supplychain.mariadb.com/MariaDB-Enterprise-GPG-KEY
+gpgcheck = 1
+enabled = 1
+

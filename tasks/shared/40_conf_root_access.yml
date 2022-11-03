@@ -1,15 +1,15 @@
 ---
 - name: set root user password
-  shell: |
+  ansible.builtin.shell: |
     mysql -uroot <<EOF
     SET PASSWORD FOR 'root'@'localhost' = PASSWORD('{{ mariadb_root_password }}');
     FLUSH PRIVILEGES;
     EOF
-  # no_log: true
+  no_log: true
   when: not mariadb_update_only
 
 - name: Configure /root/.my.cnf
-  template: 
+  ansible.builtin.template:
     src: user_my.cnf.j2
     dest: /root/.my.cnf
     owner: root

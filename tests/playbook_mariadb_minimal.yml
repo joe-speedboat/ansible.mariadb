@@ -1,7 +1,0 @@
----
-# file: test/playbook_mariadb_minimal.yml
-- name: Install and configure MariaDB Server
-  hosts: alma9
-  roles:
-    - role: joe-speedboat.mariadb
-...

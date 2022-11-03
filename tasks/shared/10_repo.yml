@@ -1,6 +1,6 @@
 ---
 - name: disable mysql community release
-  dnf: 
+  ansible.builtin.dnf:
     name: mysql*-community-release
     state: absent
 
@@ -10,9 +10,10 @@
     regexp: '^state=.*'
     line: state=disabled
     create: no
+  failed_when: False
 
 - name: create mariadb repo
-  template: 
+  ansible.builtin.template:
     src: mariadb.repo.j2
     dest: /etc/yum.repos.d/mariadb.repo
     owner: root 

@@ -1,7 +1,7 @@
 ---
 
 - name: update base mariadb server configuration
-  template:
+  ansible.builtin.template:
     src: my.cnf.j2
     dest: /etc/my.cnf
     owner: root
@@ -12,10 +12,9 @@
   - not mariadb_update_only
 
 - name: Enable and start mariadb-server
-  service:
+  ansible.builtin.systemd:
     name: mariadb
     state: started
     enabled: yes
   when: not mariadb_update_only
-
 ...

@@ -1,6 +1,6 @@
 ---
 - name: Manage Mariadb databases
-  mysql_db:
+  community.mysql.mysql_db:
     name: "{{ item.name }}"
     login_unix_socket: /var/lib/mysql/mysql.sock
     collation: "{{ item.collation | default('utf8_general_ci') }}"

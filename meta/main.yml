@@ -5,7 +5,7 @@ galaxy_info:
   role_name: mariadb
   namespace: joe-speedboat
   description: installation and configuration of mariadb (mysql)
-  min_ansible_version: 2.9
+  min_ansible_version: 2.11
   license: GPLv3
   platforms:
   - name: EL

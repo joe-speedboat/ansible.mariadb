@@ -1,12 +1,8 @@
 ---
-- name: Install Mariadb packages
-  dnf:
-    name: mariadb-server
-    state: installed
-
-- name: Install additional packages
-  dnf:
-    name:
+- name: Install packages
+  ansible.builtin.dnf:
+    name: 
+    - mariadb-server
     - python3
     - python3-PyMySQL
     state: installed

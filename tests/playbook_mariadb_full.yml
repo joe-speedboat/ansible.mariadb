@@ -1,7 +1,7 @@
 ---
 # file: test/playbook_mariadb_full.yml
 - name: Install and configure MariaDB Server
-  hosts: alma9
+  hosts: alma9,alma8,rocky8,rocky9
   roles:
     - role: joe-speedboat.mariadb
       mariadb_secure_installation: yes    #default: no
@@ -15,9 +15,6 @@
       mariadb_users_create:
         - name: user1                     #default: undefined
           password: krypt0n               #default: undefined
-          hosts:
-            - "web1"                      #default: localhost
-            - "localhost"
           privs:
             - "*.*:SELECT"                #default: *.*:USAGE
             - "db1.*:INSERT"

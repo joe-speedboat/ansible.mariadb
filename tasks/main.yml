@@ -2,6 +2,10 @@
 ---
 ######## START: Get playbooks to run ########
 
+- name: Create rhelClone fact fallback
+  set_fact:
+    ansible_distribution_custom: dummy
+
 - name: Create rhelClone fact if needed
   set_fact:
     ansible_distribution_custom: rhelClone

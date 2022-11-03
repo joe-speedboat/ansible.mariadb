@@ -1,6 +1,6 @@
 ---
 - name: Create mariadb backup script
-  template: 
+  ansible.builtin.template:
     src: backup-mysql.sh.j2
     dest: /usr/local/sbin/backup-mysql.sh
     owner: root 
@@ -9,13 +9,13 @@
   tags: [backup]
 
 - name: enable crond
-  service:
+  ansible.builtin.systemd:
     name: crond
     enabled: yes
   tags: [backup]
 
 - name: create cronjob for backup
-  cron:
+  ansible.builtin.cron:
     name: backup-mysql
     disabled: "{{ not (mariadb_backup_enable | bool) }}"
     minute: 1

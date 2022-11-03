@@ -1,5 +1,4 @@
 ---
-
 - name: calculate user
   set_fact:
     user_conf: "{{ mariadb_default_user_conf | combine(user) }}"
@@ -8,7 +7,6 @@
   community.mysql.mysql_user:
     name: "{{ user_conf.name }}"
     login_unix_socket: /var/lib/mysql/mysql.sock
-    host: "{{ item }}"
     password: "{{ user_conf.password }}"
     priv: "{{ user_conf.privs | join('/')  }}"
     state: present

@@ -3,7 +3,7 @@ mariadb_default_user_conf:
   name: ""
   password: ""
   hosts:
-  - "localhost"
+  - "127.0.0.1"
   privs: []
  # - "dbname.*:ALL"
   append_privs: no
