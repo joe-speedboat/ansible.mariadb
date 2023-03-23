@@ -1,11 +1,12 @@
 ---
 mariadb_default_user_conf:
-  name: ""
+- name: ""
   password: ""
-  hosts:
+  hosts: 
   - "127.0.0.1"
   privs: []
- # - "dbname.*:ALL"
   append_privs: no
 
 ...
+
+

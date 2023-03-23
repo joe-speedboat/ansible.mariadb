@@ -6,6 +6,7 @@
 - name: Manage Mariadb users to create
   community.mysql.mysql_user:
     name: "{{ user_conf.name }}"
+    host: "{{ item }}"
     login_unix_socket: /var/lib/mysql/mysql.sock
     password: "{{ user_conf.password }}"
     priv: "{{ user_conf.privs | join('/')  }}"
