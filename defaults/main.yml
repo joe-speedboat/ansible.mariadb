@@ -1,6 +1,6 @@
 ---
 
-mariadb_version: 10.6
+mariadb_version: 10.11
 
 mariadb_secure_installation: yes
 mariadb_root_password: 'ChangeMe.'
