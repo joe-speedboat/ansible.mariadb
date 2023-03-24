@@ -1,13 +1,13 @@
 ---
 - name: Manage Mariadb users to create
-  ansible.builtin.include_tasks: shared/subtasks/user_create.yml
+  ansible.builtin.include_tasks: "{{ vars['task_dir_' + role_name|split('.')|last] }}/rhelAll/subtasks/user_create.yml"
   loop: "{{ mariadb_users_create }}"
   loop_control:
     loop_var: user
   when: mariadb_users_create|length > 0
 
 - name: Manage Mariadb users to remove
-  ansible.builtin.include_tasks: shared/subtasks/user_delete.yml
+  ansible.builtin.include_tasks: "{{ vars['task_dir_' + role_name|split('.')|last] }}/rhelAll/subtasks/user_delete.yml"
   loop: "{{ mariadb_users_remove }}"
   loop_control:
     loop_var: user
