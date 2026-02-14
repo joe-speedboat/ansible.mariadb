@@ -14,10 +14,9 @@ git clone https://github.com/joe-speedboat/ansible.mariadb.git /etc/ansible/role
 ```
 
 ## Requirements
-* Ansible 2.9 or higher is required for this Ansible Role
+* Tested with Ansible 13.2.0 
 * OS Releases:
-  * CentOS8
-  * Alma/Rocky 9
+  * Rocky9
 
 ## Role dependencies
 This Ansilbe Role has no dependencies to other Ansilbe Roles
@@ -28,16 +27,6 @@ This Ansilbe Role has no dependencies to other Ansilbe Roles
 ```bash
 ansible-galaxy collection install -r collections/requirements.yml
 ```
-
-## uniQconsulting ag
-I am working for uniQconsulting ag and the initial roles I have written in my free time to prepare for Red Hat Ansible exam.
-When uniQconsulting ag started to work more and more with Ansible, I moved this roles into the uniQconsulting github namespace.
-However, for a better suit of my community depending needs, I dediced to take them back and maintain them in my free time again, independent and more flexible version of it.
-Feel free to use, discuss and make some pull requests if you feel the need.
-
-Thanks
-
-Chris
 
 ## Role Variables
 Variables are self speaking or documented in:   
